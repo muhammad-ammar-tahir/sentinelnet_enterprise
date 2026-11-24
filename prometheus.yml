@@ -1,0 +1,24 @@
+# prometheus.yml — SentinelNet Observability Scraper Configuration
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  # Self-monitoring
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # SentinelNet FastAPI backend telemetry & Prometheus metrics
+  - job_name: "sentinelnet-backend"
+    metrics_path: "/metrics"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["backend:8000"]
+
+  # Ryu SDN Controller statistics (accessible via host gateway)
+  - job_name: "ryu-controller"
+    metrics_path: "/stats/switches"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["host.docker.internal:8080"]

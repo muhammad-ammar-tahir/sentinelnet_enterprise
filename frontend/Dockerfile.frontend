@@ -1,0 +1,19 @@
+# Dockerfile.frontend — SentinelNet NOC Dashboard Service
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy dependency manifests
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy application source
+COPY . .
+
+# Expose Vite dev server port
+EXPOSE 5173
+
+# Start dev server with host binding
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

@@ -1,0 +1,7 @@
+# Dev / test only — not needed in production image
+pytest==9.2.0
+pytest-asyncio==1.5.0
+httpx==0.28.1
+rich==15.0.0
+black>=24.0.0
+ruff>=0.3.0

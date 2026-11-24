@@ -1,0 +1,74 @@
+{
+  "status": "synthetic_baseline_evaluation",
+  "benchmark_notice": "NOTICE: The evaluation metrics below reflect performance on controlled, synthetically generated Mininet campus telemetry. Real-world network deployments exhibit non-Gaussian noise, bursty human traffic, and overlapping fault modes; expected production accuracy will be lower than this laboratory baseline.",
+  "dataset_provenance": {
+    "source": "ai_models/generate_training_data.py",
+    "type": "synthetic_telemetry_simulation",
+    "environment": "Mininet SDN University Campus Topology (S1, S2, S3)",
+    "total_samples": 10000,
+    "train_samples": 8000,
+    "test_samples": 2000,
+    "anomaly_ratio": 0.05,
+    "data_leakage_prevented": true,
+    "scaling_strategy": "fit_on_train_only"
+  },
+  "features": [
+    "latency_ms",
+    "packet_loss_pct",
+    "cpu_pct",
+    "memory_pct",
+    "bandwidth_mbps",
+    "interface_up",
+    "error_count"
+  ],
+  "isolation_forest_unsupervised": {
+    "model_type": "IsolationForest",
+    "train_duration_sec": 0.587,
+    "avg_detection_latency_ms": 0.0223,
+    "metrics": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positive_rate": 0.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0
+    },
+    "per_class": {
+      "normal": {
+        "support": 1900,
+        "true_negatives": 1900,
+        "false_positives": 0
+      },
+      "anomaly": {
+        "support": 100,
+        "true_positives": 100,
+        "false_negatives": 0
+      }
+    },
+    "confusion_matrix": {
+      "TN": 1900,
+      "FP": 0,
+      "FN": 0,
+      "TP": 100
+    }
+  },
+  "random_forest_supervised": {
+    "model_type": "RandomForestClassifier",
+    "train_duration_sec": 0.591,
+    "avg_detection_latency_ms": 0.0334,
+    "metrics": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positive_rate": 0.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0
+    },
+    "confusion_matrix": {
+      "TN": 1900,
+      "FP": 0,
+      "FN": 0,
+      "TP": 100
+    }
+  }
+}

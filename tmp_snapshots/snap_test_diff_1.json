@@ -1,0 +1,31 @@
+{
+  "id": "snap_test_diff_1",
+  "snapshot_id": "snap_test_diff_1",
+  "status": "used",
+  "dpids": [
+    1
+  ],
+  "flows": {
+    "1": [
+      {
+        "priority": 0,
+        "match": {},
+        "actions": [
+          "CONTROLLER:65535"
+        ],
+        "cookie": 0
+      },
+      {
+        "priority": 100,
+        "match": {
+          "dl_type": 2048,
+          "nw_dst": "10.0.0.99"
+        },
+        "actions": [
+          "OUTPUT:4"
+        ],
+        "cookie": 4660
+      }
+    ]
+  }
+}

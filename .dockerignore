@@ -1,0 +1,50 @@
+# Node
+node_modules
+frontend/node_modules
+frontend/dist
+
+# Python
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Environment secrets — never bake into image
+.env
+.env.local
+.env.*.local
+
+# Logs & test artefacts
+*.log
+.pytest_cache
+htmlcov
+.coverage
+
+# Local SQLite database
+sentinelnet.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Model files — exclude raw training artefacts, whitelist production models
+*.pkl
+!ai_models/trained_model.pkl
+!ai_models/supervised_model.pkl
+!ai_models/scaler.pkl
+
+# Git history — not needed in image
+.git
+.gitignore
+
+# Docs / scripts — not needed at runtime
+docs/
+tests/
+scripts/demo.py
+README.md
+*.md
+
+# IDE
+.vscode/
+.idea/

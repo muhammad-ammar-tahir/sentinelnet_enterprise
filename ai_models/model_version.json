@@ -1,0 +1,15 @@
+{
+  "version": "1.2.0-synthetic-baseline",
+  "trained_at": "2026-11-23T11:46:18Z",
+  "algorithm": "IsolationForest",
+  "features": [
+    "latency_ms",
+    "packet_loss_pct",
+    "cpu_pct",
+    "memory_pct",
+    "bandwidth_mbps",
+    "interface_up",
+    "error_count"
+  ],
+  "contamination": 0.05
+}
