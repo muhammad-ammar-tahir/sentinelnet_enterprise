@@ -171,7 +171,7 @@ class RefreshResponse(BaseModel):
 async def get_current_user(
     token: Optional[str] = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db),
-    request: Optional[Request] = None
+    # request: Optional[Request] = None
 ) -> User:
     """Validate Bearer access token or SERVICE_API_KEY and return current User instance."""
     # 1. Check for internal SERVICE_API_KEY (used by background monitoring loop)
@@ -187,8 +187,8 @@ async def get_current_user(
                 is_active=True
             )
         # Check raw headers if request object is present
-        if request is not None:
-            auth_header = request.headers.get("authorization", "")
+        # if request is not None:
+            # auth_header = request.headers.get("authorization", "")
             if auth_header:
                 parts = auth_header.strip().split()
                 if len(parts) == 2 and parts[1] == service_key:

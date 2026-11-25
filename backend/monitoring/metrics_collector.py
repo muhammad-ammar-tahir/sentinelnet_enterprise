@@ -12,6 +12,7 @@ from typing import Dict, Any, List, Optional
 import httpx
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from backend.config import settings
 from backend.database.database import AsyncSessionLocal
@@ -411,8 +412,15 @@ class MetricsCollector:
         try:
             res = await db.execute(select(Device))
             devices = list(res.scalars().all())
-            link_res = await db.execute(select(Link))
+            link_res = await db.execute(
+                select(Link).options(
+                    selectinload(Link.src_device),
+                    selectinload(Link.dst_device)
+                )
+            )
+
             links = list(link_res.scalars().all())
+            
         except Exception as exc:
             logger.warning("Could not fetch devices/links from DB for telemetry collection: %s", exc)
         finally:

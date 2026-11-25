@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 from sqlalchemy import select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.encoders import jsonable_encoder
 
 from backend.database.database import AsyncSessionLocal
 from backend.database.models import Incident, Device, Link
@@ -137,6 +138,9 @@ class IncidentService:
             # ── 3. Build metadata payload ─────────────────────────────────────────
             now = datetime.now(timezone.utc)
             incident_id = f"inc_{int(now.timestamp() * 1000)}"
+
+            # Convert datetime and other Python objects into JSON-safe values
+            serializable_metrics = jsonable_encoder(metrics)
             metadata_payload = {
                 "target_id":           target_id,
                 "fault_type":          fault_type,
@@ -144,8 +148,8 @@ class IncidentService:
                 "model_version":       model_version or "1.2.0-synthetic-baseline",
                 "reason":              reason,
                 "source":              source,
-                "affected_metrics":    metrics,
-                "telemetry_snapshot":  metrics,
+                "affected_metrics":    serializable_metrics,
+                "telemetry_snapshot":  serializable_metrics,
                 "detection_time_ms":   680.0,
             }
 

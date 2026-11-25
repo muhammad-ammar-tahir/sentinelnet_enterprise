@@ -231,11 +231,43 @@ async def get_incident_diagnosis(
 
     from backend.diagnosis.root_cause import DiagnosisEngine
     engine = DiagnosisEngine()
-    context = {
-        "target_id": inc.affected_link_id or inc.affected_device_id or "s2-s3",
+    metadata = inc.metadata_payload or {}
+    
+    telemetry = (
+        metadata.get("telemetry_snapshot")
+        or metadata.get("affected_metrics")
+        or {}
+    )
+    
+    if not isinstance(telemetry, dict):
+        telemetry = {}
+    
+    fault = {
+        "fault_type": (
+            metadata.get("fault_type")
+            or inc.root_cause
+            or "UNKNOWN"
+        ),
+        "target_id": (
+            metadata.get("target_id")
+            or inc.affected_device_id
+            or inc.affected_link_id
+            or "unknown"
+        ),
         "severity": inc.severity,
-        "metrics": {"packet_loss": 100.0, "latency": 999.0, "interface_up": 0}
+        "confidence": inc.confidence_score or 0.0,
+        "reason": metadata.get("reason") or inc.title,
+        "telemetry_snapshot": telemetry,
     }
+    
+    context = {
+        "neighbor_metrics": {},
+        "topology_state": {},
+        "history": []
+    }
+    
+    hypotheses = engine.diagnose(fault, context)
+    
     try:
         hypotheses = engine.diagnose(inc.title, context)
         hypo_dicts = [h.to_dict() if hasattr(h, "to_dict") else h for h in hypotheses]

@@ -267,9 +267,9 @@ export default function LoginPage() {
                 onChange={e => setRole(e.target.value)}
                 className="w-full px-3 py-2 rounded bg-surface-container-lowest border border-outline-variant/50 text-xs font-code text-on-surface focus:outline-none focus:border-secondary cursor-pointer"
               >
-                <option value="NOC Commander">L3: NOC Commander (Full Actuation)</option>
+                <option value="NOC Commander">L1: NOC Commander (Full Actuation)</option>
                 <option value="Network Operator">L2: Network Operations Engineer</option>
-                <option value="Security Auditor">L1: Observability & Audit Viewer</option>
+                <option value="Security Auditor">L3: Observability & Audit Viewer</option>
               </select>
             </div>
 
